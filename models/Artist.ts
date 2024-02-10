@@ -6,10 +6,10 @@ const ArtistSchema = new Schema(
       type: String,
       required: true,
     },
-    photo: {
+    info: {
       type: String,
     },
-    info: {
+    photo: {
       type: String,
     },
   },
