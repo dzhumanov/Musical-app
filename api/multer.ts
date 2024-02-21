@@ -1,20 +1,20 @@
 import multer from "multer";
 import { promises as fs } from "fs";
 import path from "path";
-import { randomUUID } from "crypto";
 import config from "./config";
+import { randomUUID } from "crypto";
 
 const imageStorage = multer.diskStorage({
-  destination: async (req, file, cb) => {
+  destination: async (req, file, callback) => {
     const destDir = path.join(config.publicPath, "images");
     await fs.mkdir(destDir, { recursive: true });
-    cb(null, config.publicPath);
+    callback(null, config.publicPath);
   },
-  filename: (req, file, cb) => {
+  filename: (req, file, callback) => {
     const extension = path.extname(file.originalname);
     const filename = path.join("images", randomUUID() + extension);
-    cb(null, filename);
+    callback(null, filename);
   },
 });
 
-export const imagesUpload = multer({ storage: imageStorage });
+export const imageUpload = multer({ storage: imageStorage });

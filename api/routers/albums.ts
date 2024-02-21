@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import { imagesUpload } from "../multer";
+import { imageUpload } from "../multer";
 import Album from "../models/Album";
 
 const albumsRouter = express.Router();
@@ -24,7 +24,7 @@ albumsRouter.get("/", async (req, res, next) => {
   }
 });
 
-albumsRouter.post("/", imagesUpload.single("image"), async (req, res, next) => {
+albumsRouter.post("/", imageUpload.single("image"), async (req, res, next) => {
   try {
     const albumData = {
       name: req.body.name,

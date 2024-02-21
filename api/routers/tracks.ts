@@ -1,6 +1,6 @@
 import express from "express";
 import mongoose from "mongoose";
-import { imagesUpload } from "../multer";
+import { imageUpload } from "../multer";
 import Track from "../models/Track";
 import Album from "../models/Album";
 
@@ -32,7 +32,7 @@ tracksRouter.get("/", async (req, res, next) => {
   }
 });
 
-tracksRouter.post("/", imagesUpload.single("image"), async (req, res, next) => {
+tracksRouter.post("/", imageUpload.single("image"), async (req, res, next) => {
   try {
     const trackData = {
       name: req.body.name,

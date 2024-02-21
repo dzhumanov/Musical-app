@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Button,
   Card,
   CardActions,
   CardContent,
@@ -9,19 +10,14 @@ import {
   IconButton,
   styled,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { apiURL } from "../../../constants";
-
-const ImageCardMedia = styled(CardMedia)({
-  height: 0,
-  paddingTop: "56.25%", // 16:9
-});
 
 interface Props {
   name: string;
   photo: string | null;
-  id: string;
+  id: string | null;
 }
 
 const ArtistItem: React.FC<Props> = ({ name, photo, id }) => {
@@ -32,11 +28,31 @@ const ArtistItem: React.FC<Props> = ({ name, photo, id }) => {
   }
 
   return (
-    <Grid item sm md={6} lg={4}>
+    <Grid item sm md={4} lg={3}>
       <Card sx={{ height: "100%" }}>
         <CardHeader title={name} />
-        <ImageCardMedia image={cardImage} title={name} />
-        <p>{id}</p>
+        <CardMedia
+          component="img"
+          sx={{
+            display: "block",
+            width: "100%",
+            height: "auto",
+            maxHeight: "500px",
+            mx: "auto",
+          }}
+          image={cardImage}
+        />
+        <Button variant="contained" sx={{ mr: "20px" }}>
+          <NavLink
+            style={{
+              textDecoration: "none",
+              color: "#fff",
+            }}
+            to={`/artists/${id}`}
+          >
+            Read Full post
+          </NavLink>
+        </Button>
       </Card>
     </Grid>
   );
