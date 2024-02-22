@@ -19,20 +19,16 @@ const OneAlbum = () => {
     }
   }, [id, dispatch]);
 
-  let cardImage;
-
-  if (album?.image) {
-    cardImage = apiURL + "/" + album.image;
-  }
-
   return (
     <>
       <Grid container direction="column">
-        <Typography variant="h3">Artist name</Typography>
+        <Typography variant="h3">{album?.artist.name}</Typography>
         <Typography variant="h3">{album?.name}</Typography>
-        <Typography variant="h6">{album?.date}</Typography>
+        <Typography variant="h6">Year: {album?.date}</Typography>
       </Grid>
-      <Tracks albumId={albumId} />
+      <Grid container direction="column">
+        <Tracks albumId={albumId} />
+      </Grid>
     </>
   );
 };

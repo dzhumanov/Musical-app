@@ -10,6 +10,10 @@ export interface album {
   name: string;
   image: string;
   date: number;
+  artist: {
+    name: string;
+    _id: string;
+  };
 }
 
 export interface track {

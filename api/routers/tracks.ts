@@ -11,10 +11,9 @@ tracksRouter.get("/", async (req, res, next) => {
     let tracks;
 
     if (req.query.album) {
-      tracks = await Track.find({ album: req.query.album }).populate(
-        "album",
-        "name"
-      );
+      tracks = await Track.find({ album: req.query.album })
+        .populate("album", "name")
+        .sort({ trackNumber: 1 });
     } else if (req.query.artist) {
       const albums = await Album.find({ artist: req.query.artist });
       const idArray = albums.map((album) => album._id);
@@ -38,6 +37,7 @@ tracksRouter.post("/", imageUpload.single("image"), async (req, res, next) => {
       name: req.body.name,
       album: req.body.album,
       duration: req.body.duration,
+      trackNumber: req.body.trackNumber,
     };
 
     const track = new Track(trackData);

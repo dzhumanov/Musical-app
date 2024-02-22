@@ -18,13 +18,17 @@ const Tracks: React.FC<Props> = ({ albumId }) => {
 
   return (
     <>
-      <Grid container>
+      <Grid container direction="column">
         {tracks.map((track) => (
-            <Grid item>
-                <Typography variant="h5">{track.trackNumber}</Typography>
-                <Typography variant="h5">{track.name}</Typography>
-                <Typography variant="h5">{track.duration}</Typography>
-            </Grid>
+          <Grid item container key={track.name}>
+            <Typography variant="h5" sx={{ mr: "20px" }}>
+              {track.trackNumber}
+            </Typography>
+            <Typography variant="h5">{track.name}</Typography>
+            <Typography variant="h5" sx={{ display: "block", ml: "auto" }}>
+              {track.duration}
+            </Typography>
+          </Grid>
         ))}
       </Grid>
     </>
