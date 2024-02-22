@@ -1,19 +1,27 @@
 import React from "react";
-import { Button, Card, CardHeader, CardMedia, Grid } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardMedia,
+  Grid,
+  Typography,
+} from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { apiURL } from "../../../constants";
 
 interface Props {
-  name: string;
-  photo: string | null;
   id: string | null;
+  name: string;
+  image: string | null;
+  date: number;
 }
 
-const ArtistItem: React.FC<Props> = ({ name, photo, id }) => {
+const AlbumItem: React.FC<Props> = ({ name, image, date, id }) => {
   let cardImage;
 
-  if (photo) {
-    cardImage = apiURL + "/" + photo;
+  if (image) {
+    cardImage = apiURL + "/" + image;
   }
 
   return (
@@ -27,6 +35,7 @@ const ArtistItem: React.FC<Props> = ({ name, photo, id }) => {
         }}
       >
         <CardHeader title={name} />
+        <Typography variant="h4">Year: {date}</Typography>
         <CardMedia
           component="img"
           sx={{
@@ -44,9 +53,9 @@ const ArtistItem: React.FC<Props> = ({ name, photo, id }) => {
               textDecoration: "none",
               color: "#fff",
             }}
-            to={`/artists/${id}`}
+            to={`/albums/${id}`}
           >
-            Show artist
+            Show album
           </NavLink>
         </Button>
       </Card>
@@ -54,4 +63,4 @@ const ArtistItem: React.FC<Props> = ({ name, photo, id }) => {
   );
 };
 
-export default ArtistItem;
+export default AlbumItem;
