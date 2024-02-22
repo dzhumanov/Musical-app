@@ -1,6 +1,5 @@
-import { Box, CardMedia, Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { artist } from "../../../types";
+import { Box, Grid, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { fetchOneArtist } from "../artistsThunks";
 import { useParams } from "react-router-dom";
@@ -12,7 +11,7 @@ const OneArtist = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams<{ id?: string }>();
   const artist = useAppSelector(selectSingleArtist);
-  const artistId = id || '';
+  const artistId = id || "";
 
   useEffect(() => {
     if (id) {

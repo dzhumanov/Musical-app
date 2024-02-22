@@ -11,3 +11,9 @@ export interface album {
   image: string;
   date: number;
 }
+
+export interface track {
+  name: string;
+  duration: string;
+  trackNumber: number;
+}
