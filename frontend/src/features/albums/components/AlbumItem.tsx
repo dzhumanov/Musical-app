@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { apiURL } from "../../../constants";
+import imageNotAvailable from "../../../assets/images/image_not_available.png";
 
 interface Props {
   id: string | null;
@@ -18,7 +19,7 @@ interface Props {
 }
 
 const AlbumItem: React.FC<Props> = ({ name, image, date, id }) => {
-  let cardImage;
+  let cardImage = imageNotAvailable;
 
   if (image) {
     cardImage = apiURL + "/" + image;
@@ -34,8 +35,17 @@ const AlbumItem: React.FC<Props> = ({ name, image, date, id }) => {
           justifyContent: "space-between",
         }}
       >
-        <CardHeader title={name} />
-        <Typography variant="h4">Year: {date}</Typography>
+        <CardHeader
+          sx={{ paddingBottom: "0" }}
+          title={
+            <Typography variant="h3" sx={{ textAlign: "center" }}>
+              {name}
+            </Typography>
+          }
+        />
+        <Typography variant="h4" sx={{ textAlign: "center" }}>
+          {date}
+        </Typography>
         <CardMedia
           component="img"
           sx={{
@@ -47,17 +57,18 @@ const AlbumItem: React.FC<Props> = ({ name, image, date, id }) => {
           }}
           image={cardImage}
         />
-        <Button variant="contained" sx={{ mr: "20px" }}>
-          <NavLink
-            style={{
-              textDecoration: "none",
-              color: "#fff",
-            }}
-            to={`/albums/${id}`}
-          >
+        <NavLink
+          style={{
+            textDecoration: "none",
+            color: "#fff",
+            width: "100%",
+          }}
+          to={`/albums/${id}`}
+        >
+          <Button variant="contained" sx={{ width: "100%" }}>
             Show album
-          </NavLink>
-        </Button>
+          </Button>
+        </NavLink>
       </Card>
     </Grid>
   );

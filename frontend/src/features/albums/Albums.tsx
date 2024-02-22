@@ -10,10 +10,10 @@ import { Grid, Typography } from "@mui/material";
 import AlbumItem from "./components/AlbumItem";
 
 interface Props {
-    artistId: string;
+  artistId: string;
 }
 
-const Albums:React.FC<Props> = ({artistId}) => {
+const Albums: React.FC<Props> = ({ artistId }) => {
   const dispatch = useAppDispatch();
   const albums = useAppSelector(selectAlbums);
   const loading = useAppSelector(selectAlbumsLoading);
@@ -25,7 +25,9 @@ const Albums:React.FC<Props> = ({artistId}) => {
 
   return (
     <>
-      <Typography variant="h3">Albums</Typography>
+      <Typography variant="h2" sx={{ mt: "30px", fontWeight: "bold" }}>
+        Albums
+      </Typography>
       <Grid item container spacing={2}>
         {albums.map((album) => (
           <AlbumItem

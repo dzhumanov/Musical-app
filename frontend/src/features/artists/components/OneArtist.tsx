@@ -27,21 +27,26 @@ const OneArtist = () => {
 
   return (
     <>
-      <Grid container direction="column">
-        <Box
-          component="img"
-          sx={{
-            display: "block",
-            width: "auto",
-            maxWidth: "100%",
-            maxHeight: "250px",
-            height: "auto",
-            mx: "auto",
-          }}
-          src={cardImage}
-        />
-        <Typography variant="h3">{artist?.name}</Typography>
-        <Typography variant="h6">{artist?.info}</Typography>
+      <Grid container>
+        <Grid item>
+          <Box
+            component="img"
+            sx={{
+              display: "block",
+              width: "auto",
+              maxWidth: "100%",
+              maxHeight: "250px",
+              height: "auto",
+            }}
+            src={cardImage}
+          />
+        </Grid>
+        <Grid item sx={{ ml: "30px" }}>
+          <Typography variant="h2" sx={{ fontWeight: "bold" }}>
+            {artist?.name}
+          </Typography>
+          <Typography variant="h4">{artist?.info}</Typography>
+        </Grid>
       </Grid>
       <Albums artistId={artistId} />
     </>

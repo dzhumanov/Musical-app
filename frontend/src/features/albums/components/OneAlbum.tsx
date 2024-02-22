@@ -1,7 +1,7 @@
-import { Box, Grid, Typography } from "@mui/material";
+import { Box, Button, Grid, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { apiURL } from "../../../constants";
 import { selectSingleAlbum } from "../albumsSlice";
 import { fetchOneAlbum } from "../albumsThunks";
@@ -22,13 +22,33 @@ const OneAlbum = () => {
   return (
     <>
       <Grid container direction="column">
-        <Typography variant="h3">{album?.artist.name}</Typography>
-        <Typography variant="h3">{album?.name}</Typography>
-        <Typography variant="h6">Year: {album?.date}</Typography>
+        <Typography variant="h2" sx={{ fontWeight: "bold" }}>
+          {album?.artist.name}
+        </Typography>
+        <Grid item container alignItems="center">
+          <Typography variant="h3" sx={{ mr: "15px" }}>
+            {album?.name}
+          </Typography>
+          <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+            {album?.date}
+          </Typography>
+        </Grid>
       </Grid>
       <Grid container direction="column">
         <Tracks albumId={albumId} />
       </Grid>
+      <NavLink
+        style={{
+          textDecoration: "none",
+          color: "#fff",
+          width: "100%",
+        }}
+        to={`/`}
+      >
+        <Button variant="contained" sx={{ width: "100%" }}>
+          Back to home
+        </Button>
+      </NavLink>
     </>
   );
 };

@@ -1,10 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-  selectArtists,
-  selectArtistsError,
-  selectArtistsLoading,
-} from "./artistsSlice";
+import { selectArtists } from "./artistsSlice";
 import { useEffect } from "react";
 import { fetchArtist } from "./artistsThunks";
 import ArtistItem from "./components/ArtistItem";
@@ -12,8 +8,6 @@ import ArtistItem from "./components/ArtistItem";
 const Artists = () => {
   const dispatch = useAppDispatch();
   const artists = useAppSelector(selectArtists);
-  const loading = useAppSelector(selectArtistsLoading);
-  const error = useAppSelector(selectArtistsError);
 
   useEffect(() => {
     dispatch(fetchArtist());
@@ -21,7 +15,9 @@ const Artists = () => {
 
   return (
     <>
-      <Typography variant="h3">Artists</Typography>
+      <Typography variant="h2" sx={{ textAlign: "center", fontWeight: "bold" }}>
+        Artists
+      </Typography>
       <Grid item container spacing={2}>
         {artists.map((artist) => (
           <ArtistItem
