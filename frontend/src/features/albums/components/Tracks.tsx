@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectTracks } from "../albumsSlice";
 import { useEffect } from "react";
 import { fetchTracks } from "../albumsThunks";
+import OneTrack from "./OneTrack";
 
 interface Props {
   albumId: string;
@@ -20,15 +21,7 @@ const Tracks: React.FC<Props> = ({ albumId }) => {
     <>
       <Grid container direction="column">
         {tracks.map((track) => (
-          <Grid item container key={track.name}>
-            <Typography variant="h5" sx={{ mr: "20px" }}>
-              {track.trackNumber}
-            </Typography>
-            <Typography variant="h5">{track.name}</Typography>
-            <Typography variant="h5" sx={{ display: "block", ml: "auto" }}>
-              {track.duration}
-            </Typography>
-          </Grid>
+          <OneTrack track={track} key={track.name} />
         ))}
       </Grid>
     </>

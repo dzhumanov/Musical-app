@@ -3,6 +3,7 @@ import { Button, Menu, MenuItem } from "@mui/material";
 import { User } from "../../../types";
 import { useAppDispatch } from "../../../app/hooks";
 import { logoutUser } from "../../../features/users/usersSlice";
+
 interface Props {
   user: User;
 }

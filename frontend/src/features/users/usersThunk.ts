@@ -4,6 +4,8 @@ import {
   LoginMutation,
   RegisterMutation,
   RegisterResponse,
+  TrackHistoryRequest,
+  TrackHistoryResponse,
   User,
   ValidationError,
 } from "../../types";
@@ -47,3 +49,30 @@ export const login = createAsyncThunk<
     throw e;
   }
 });
+
+export const sendTrackHistory = createAsyncThunk<
+  TrackHistoryResponse,
+  TrackHistoryRequest,
+  { rejectValue: GlobalError }
+>(
+  "trackHistory/sendTrackHistory",
+  async ({ token, trackId }, { rejectWithValue }) => {
+    try {
+      const response = await axiosApi.post<TrackHistoryResponse>(
+        "/trackHistory",
+        { trackId },
+        {
+          headers: {
+            Authentication: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      if (isAxiosError(e) && e.response && e.response.status === 400) {
+        return rejectWithValue(e.response.data as GlobalError);
+      }
+      throw e;
+    }
+  }
+);

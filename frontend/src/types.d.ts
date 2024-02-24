@@ -17,6 +17,7 @@ export interface album {
 }
 
 export interface track {
+  _id: string;
   name: string;
   duration: string;
   trackNumber: number;
@@ -58,3 +59,15 @@ export interface RegisterResponse {
   message: string;
   user: User;
 }
+
+export interface TrackHistoryRequest {
+  token: string;
+  trackId: string;
+}
+
+export interface TrackHistoryResponse {
+  user: string;
+  track: string;
+  datetime: Date;
+}
+
