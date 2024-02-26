@@ -1,69 +1,50 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  GlobalError,
-  TrackHistoryRequest,
-  TrackHistoryResponse,
-  trackHistory,
-} from "../../types";
+import { trackHistory } from "../../types";
 import axiosApi from "../../axiosApi";
-import { isAxiosError } from "axios";
-import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 
 export const fetchHistory = createAsyncThunk<
   trackHistory[],
   void,
-  { rejectValue: GlobalError }
->("trackHistory/fetchAll", async (_, { rejectWithValue }) => {
+  { state: RootState }
+>("trackHistory/fetchAll", async (_, thunkApi) => {
   try {
-    const token = useSelector((state: RootState) => state.users.user?.token);
+    const state = thunkApi.getState();
+    const token = state.users.user?.token;
+    let history: trackHistory[] = [];
 
-    if (!token) {
-      throw new Error("No token!");
+    if (token) {
+      const response = await axiosApi.get<trackHistory[]>("/trackHistory", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      history = response.data;
     }
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    const response = await axiosApi.get<trackHistory[]>(
-      "/trackHistory",
-      config
-    );
-    return response.data;
+    return history;
   } catch (e) {
-    if (isAxiosError(e) && e.response && e.response.status === 400) {
-      return rejectWithValue(e.response.data as GlobalError);
-    }
+    console.error(e);
     throw e;
   }
 });
 
 export const sendTrackHistory = createAsyncThunk<
-  TrackHistoryResponse,
-  TrackHistoryRequest,
-  { rejectValue: GlobalError }
->(
-  "trackHistory/sendTrackHistory",
-  async ({ token, trackId }, { rejectWithValue }) => {
-    try {
-      const response = await axiosApi.post<TrackHistoryResponse>(
-        "/trackHistory",
-        { trackId },
-        {
-          headers: {
-            Authentication: `Bearer ${token}`,
-          },
-        }
-      );
-      return response.data;
-    } catch (e) {
-      if (isAxiosError(e) && e.response && e.response.status === 400) {
-        return rejectWithValue(e.response.data as GlobalError);
-      }
-      throw e;
+  void,
+  string,
+  { state: RootState }
+>("trackHistory/post", async (trackId, thunkApi) => {
+  try {
+    const state = thunkApi.getState();
+    const token = state.users.user?.token;
+
+    if (token) {
+      const data = {
+        track: trackId,
+      };
+      await axiosApi.post("/trackHistory", data, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
     }
+  } catch (e) {
+    console.error(e);
   }
-);
+});

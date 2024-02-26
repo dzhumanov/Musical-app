@@ -62,7 +62,7 @@ export interface RegisterResponse {
 
 export interface TrackHistoryRequest {
   token: string;
-  trackId: string;
+  track: string;
 }
 
 export interface TrackHistoryResponse {
