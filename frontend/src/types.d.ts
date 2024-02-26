@@ -71,3 +71,8 @@ export interface TrackHistoryResponse {
   datetime: Date;
 }
 
+export interface trackHistory {
+  artist: artist;
+  track: track;
+  datetime: Date;
+}

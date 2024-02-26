@@ -1,4 +1,4 @@
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { selectTracks } from "../albumsSlice";
 import { useEffect } from "react";

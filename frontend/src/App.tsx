@@ -6,6 +6,7 @@ import OneArtist from "./features/artists/components/OneArtist";
 import OneAlbum from "./features/albums/components/OneAlbum";
 import Register from "./features/users/Register";
 import Login from "./features/users/Login";
+import TrackHistory from "./features/trackHistory/TrackHistory";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="/albums/:id" element={<OneAlbum />} />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/trackHistory" element={<TrackHistory />} />
             <Route path="*" element={<h1>Not found</h1>} />
           </Routes>
         </Container>

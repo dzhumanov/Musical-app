@@ -3,7 +3,7 @@ import { track } from "../../../types";
 import { useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../users/usersSlice";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import { sendTrackHistory } from "../../users/usersThunk";
+import { sendTrackHistory } from "../../trackHistory/trackHistoryThunk";
 
 interface Props {
   track: track;
@@ -16,7 +16,9 @@ const OneTrack: React.FC<Props> = ({ track }) => {
     if (user) {
       try {
         sendTrackHistory({ token: user.token, trackId: track._id });
-      } catch (error) {}
+      } catch (error) {
+        throw error;
+      }
     }
   };
 
