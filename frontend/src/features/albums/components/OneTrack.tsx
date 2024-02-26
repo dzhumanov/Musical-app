@@ -16,13 +16,19 @@ const OneTrack: React.FC<Props> = ({ track }) => {
   const handlePlayTrack = async () => {
     if (user) {
       try {
-        await dispatch(
-          sendTrackHistory(track._id)
-        );
+        if (track.link) {
+          playYouTubeTrack(track.link);
+        }
+
+        await dispatch(sendTrackHistory(track._id));
       } catch (error) {
         throw error;
       }
     }
+  };
+
+  const playYouTubeTrack = (youtubeLink: string) => {
+    window.open(youtubeLink, "YouTube Player", "width=1000,height=1000");
   };
 
   return (

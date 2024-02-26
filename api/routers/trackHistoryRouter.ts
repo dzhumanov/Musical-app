@@ -1,57 +1,62 @@
 import express from "express";
-import mongoose from "mongoose";
-import User from "../models/User";
 import TrackHistory from "../models/TrackHistory";
 import auth, { RequestWithUser } from "../middleware/auth";
+import Track from "../models/Track";
+import Album from "../models/Album";
+import Artist from "../models/Artist";
 
 const trackHistoryRouter = express.Router();
 
 trackHistoryRouter.get("/", auth, async (req: RequestWithUser, res, next) => {
   try {
-    const userId = req.user?._id;
-
-    const tracks = await TrackHistory.find({ username: userId })
-      .sort({ datetime: -1 })
-      .populate("artist track", "name title");
-
-    const result = tracks.map((track) => ({
-      _id: track._id,
-      track: track.track,
-      artist: track.artist,
-      datetime: track.datetime,
-    }));
-
-    res.send(result);
-  } catch (e) {
-    next(e);
+    const results = await TrackHistory.find({ user: req.user?._id })
+      .populate("track").populate("artist", "name")
+      .sort({ datetime: -1 });
+    return res.send(results);
+  } catch (error) {
+    return next(error);
   }
 });
 
-trackHistoryRouter.post("/", auth, async (req, res, next) => {
+trackHistoryRouter.post("/", auth, async (req: RequestWithUser, res, next) => {
   try {
-    const token = req.headers.authorization;
-    if (!token) {
-      return res.status(401).send({ error: "You are not authorized!" });
+    if (!req.user) {
+      return res.status(401).send({ error: "Unauthorized" });
     }
 
-    const user = await User.findOne({ token });
-    if (!user) {
-      return res.status(401).send({ error: "Incorrect token!" });
+    const userId = req.user._id;
+
+    const trackId = req.body.track;
+    if (!trackId) {
+      return res.status(400).send({ error: "Track ID is required" });
+    }
+
+    const track = await Track.findById(trackId);
+    if (!track) {
+      return res.status(404).send({ error: "No such track!" });
+    }
+
+    const album = await Album.findById(track.album);
+    if (!album) {
+      return res.status(404).send({ error: "No such album!" });
+    }
+
+    const artist = await Artist.findById(album.artist);
+    if (!artist) {
+      return res.status(404).send({ error: "No such artist!" });
     }
 
     const trackHistory = new TrackHistory({
-      user: user._id,
-      track: req.body.track,
+      user: userId,
+      track: trackId,
       datetime: new Date(),
+      artist: artist._id,
     });
 
     await trackHistory.save();
-    console.log(trackHistory)
-    res.send(trackHistory);
+
+    return res.send(trackHistory);
   } catch (e) {
-    if (e instanceof mongoose.Error.ValidationError) {
-      return res.status(422).send(e);
-    }
     next(e);
   }
 });

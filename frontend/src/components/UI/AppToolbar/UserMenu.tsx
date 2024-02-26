@@ -47,7 +47,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
         onClose={handleClose}
       >
         <MenuItem>
-          <Typography variant="h3" component="div" sx={{ textAlign: "center" }}>
+          <Typography variant="h6" component="div" sx={{ textAlign: "center" }}>
             <Link to="/trackHistory">History</Link>
           </Typography>
         </MenuItem>

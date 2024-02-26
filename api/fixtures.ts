@@ -89,6 +89,7 @@ const run = async () => {
       album: crybaby,
       duration: "4:07",
       trackNumber: 1,
+      link: "https://www.youtube.com/watch?v=inocgEraxo0",
     },
     {
       name: "lil jeep",

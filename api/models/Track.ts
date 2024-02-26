@@ -27,6 +27,9 @@ const TrackSchema = new Schema(
       type: Number,
       required: true,
     },
+    link: {
+      type: String,
+    },
   },
   {
     versionKey: false,

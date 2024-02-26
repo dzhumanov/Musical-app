@@ -21,6 +21,7 @@ export interface track {
   name: string;
   duration: string;
   trackNumber: number;
+  link: string;
 }
 
 export interface RegisterMutation {

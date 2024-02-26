@@ -14,7 +14,7 @@ const OneTrackHistoryItem: React.FC<Props> = ({ track, date, artist }) => {
   return (
     <>
       <Grid item container>
-        <Typography variant="h5" sx={{ mr: "20px" }}>
+        <Typography variant="h5" sx={{ mr: "20px", fontWeight: "bold" }}>
           {artist.name}
         </Typography>
         <Typography sx={{ fontWeight: "bold" }}>-</Typography>
