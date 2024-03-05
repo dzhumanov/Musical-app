@@ -23,13 +23,13 @@ artistsRouter.get("/:id", async (req, res, next) => {
       return res.status(404).send({ error: "Wrong ObjectId!" });
     }
 
-    const product = await Artist.findById(_id);
+    const artist = await Artist.findById(_id);
 
-    if (!product) {
+    if (!artist) {
       return res.status(404).send({ error: "Not found!" });
     }
 
-    res.send(product);
+    res.send(artist);
   } catch (e) {
     next(e);
   }

@@ -30,6 +30,10 @@ const TrackSchema = new Schema(
     link: {
       type: String,
     },
+    isPublished: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     versionKey: false,

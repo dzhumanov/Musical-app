@@ -4,8 +4,6 @@ import {
   LoginMutation,
   RegisterMutation,
   RegisterResponse,
-  TrackHistoryRequest,
-  TrackHistoryResponse,
   User,
   ValidationError,
 } from "../../types";

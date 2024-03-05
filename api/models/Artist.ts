@@ -12,6 +12,10 @@ const ArtistSchema = new Schema(
     photo: {
       type: String,
     },
+    isPublished: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     versionKey: false,
