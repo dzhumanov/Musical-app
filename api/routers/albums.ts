@@ -1,7 +1,9 @@
 import express from "express";
 import mongoose, { Types } from "mongoose";
 import { imageUpload } from "../multer";
+import auth, { RequestWithUser } from "../middleware/auth";
 import Album from "../models/Album";
+import permit from "../middleware/permit";
 
 const albumsRouter = express.Router();
 
@@ -44,25 +46,71 @@ albumsRouter.get("/:id", async (req, res, next) => {
   }
 });
 
-albumsRouter.post("/", imageUpload.single("image"), async (req, res, next) => {
-  try {
-    const albumData = {
-      name: req.body.name,
-      artist: req.body.artist,
-      date: req.body.date,
-      image: req.file ? req.file.filename : null,
-    };
+albumsRouter.post(
+  "/",
+  auth,
+  imageUpload.single("image"),
+  async (req: RequestWithUser, res, next) => {
+    try {
+      const albumData = {
+        name: req.body.name,
+        artist: req.body.artist,
+        date: req.body.date,
+        image: req.file ? req.file.filename : null,
+      };
 
-    const album = new Album(albumData);
+      const album = new Album(albumData);
 
-    await album.save();
-    return res.send(album);
-  } catch (e) {
-    if (e instanceof mongoose.Error.ValidationError) {
-      return res.status(422).send(e);
+      await album.save();
+      return res.send(album);
+    } catch (e) {
+      if (e instanceof mongoose.Error.ValidationError) {
+        return res.status(422).send(e);
+      }
+      next(e);
     }
-    next(e);
   }
-});
+);
+
+albumsRouter.patch(
+  "/:id/togglePublished",
+  auth,
+  permit("admin"),
+  async (req, res, next) => {
+    try {
+      const album = await Album.findById(req.params.id);
+      if (!album) {
+        return res.status(404).send({ error: "Artist not found!" });
+      }
+      album.isPublished = !album.isPublished;
+      await album.save();
+      res.send(album);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+albumsRouter.delete(
+  "/:id",
+  auth,
+  permit("admin"),
+  async (req: RequestWithUser, res, next) => {
+    try {
+      const albumId = req.params.id;
+
+      const album = await Album.findById(albumId);
+      if (!album) {
+        return res.status(404).send({ error: "Album not found!" });
+      }
+
+      await Album.findByIdAndDelete(albumId);
+
+      return res.send({ message: "Album deleted." });
+    } catch (e) {
+      next(e);
+    }
+  }
+);
 
 export default albumsRouter;
