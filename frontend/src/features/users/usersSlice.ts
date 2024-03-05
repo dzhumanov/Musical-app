@@ -20,12 +20,14 @@ const initialState: UsersState = {
   loginError: null,
 };
 
-export const logoutUser = createAction("users/logout");
-
 export const usersSlice = createSlice({
   name: "users",
   initialState,
-  reducers: {},
+  reducers: {
+    unsetUser: (state) => {
+      state.user = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(register.pending, (state) => {
       state.registerLoading = true;
@@ -52,14 +54,10 @@ export const usersSlice = createSlice({
       state.loginLoading = false;
       state.loginError = error || null;
     });
-
-    builder.addCase(logoutUser, (state) => {
-      state.user = null;
-      storage.removeItem("persist:store:users");
-    });
   },
 });
 
+export const { unsetUser } = usersSlice.actions;
 export const usersReducer = usersSlice.reducer;
 
 export const selectUser = (state: RootState) => state.users.user;

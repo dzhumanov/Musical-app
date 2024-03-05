@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Button, Menu, MenuItem, Typography, styled } from "@mui/material";
 import { User } from "../../../types";
 import { useAppDispatch } from "../../../app/hooks";
-import { logoutUser } from "../../../features/users/usersSlice";
 import { NavLink } from "react-router-dom";
+import { logout } from "../../../features/users/usersThunk";
 
 interface Props {
   user: User;
@@ -30,8 +30,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
   };
 
   const handleLogout = () => {
-    dispatch(logoutUser());
-    setAnchorEl(null);
+    dispatch(logout());
   };
 
   return (
