@@ -8,6 +8,7 @@ import Register from "./features/users/Register";
 import Login from "./features/users/Login";
 import TrackHistory from "./features/trackHistory/TrackHistory";
 import CreateArtist from "./features/artists/CreateArtist";
+import CreateAlbum from "./features/albums/CreateAlbum";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="/login" element={<Login />} />
 
             <Route path="/artists/create" element={<CreateArtist/>} />
+            <Route path="/albums/create" element={<CreateAlbum/>} />
 
             <Route path="*" element={<h1>Not found</h1>} />
           </Routes>

@@ -3,11 +3,11 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { Container, Typography } from "@mui/material";
 import { selectUser } from "../users/usersSlice";
 import { useEffect } from "react";
-import { ArtistMutation } from "../../types";
-import { createArtist } from "./artistsThunks";
-import ArtistForm from "./components/ArtistForm";
+import { AlbumMutation } from "../../types";
+import { createAlbum } from "./albumsThunks";
+import AlbumForm from "./components/AlbumForm";
 
-const CreateArtist = () => {
+const CreateAlbum = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const user = useAppSelector(selectUser);
@@ -18,9 +18,9 @@ const CreateArtist = () => {
     }
   }, [navigate]);
 
-  const onFormSubmit = async (ArtistMutation: ArtistMutation) => {
+  const onFormSubmit = async (AlbumMutation: AlbumMutation) => {
     try {
-      await dispatch(createArtist(ArtistMutation)).unwrap();
+      await dispatch(createAlbum(AlbumMutation)).unwrap();
       navigate("/");
     } catch (e) {
       console.error(e);
@@ -36,10 +36,10 @@ const CreateArtist = () => {
         borderRadius: "10px",
       }}
     >
-      <Typography variant="h4">Post new artist</Typography>
-      <ArtistForm onSubmit={onFormSubmit} />
+      <Typography variant="h4">Post new album</Typography>
+      <AlbumForm onSubmit={onFormSubmit} />
     </Container>
   );
 };
 
-export default CreateArtist;
+export default CreateAlbum;
