@@ -1,9 +1,9 @@
 import { Button, Grid, Typography } from "@mui/material";
-import { track } from "../../../types";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { selectUser } from "../../users/usersSlice";
+import { track } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { selectUser } from "../users/usersSlice";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import { sendTrackHistory } from "../../trackHistory/trackHistoryThunk";
+import { sendTrackHistory } from "../trackHistory/trackHistoryThunk";
 
 interface Props {
   track: track;

@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
-import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import { selectTracks } from "../albumsSlice";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { useEffect } from "react";
-import { fetchTracks } from "../albumsThunks";
+import { fetchTracks } from "./tracksThunk";
 import OneTrack from "./OneTrack";
+import { selectTracks } from "./tracksSlice";
 
 interface Props {
   albumId: string;

@@ -5,7 +5,7 @@ import { NavLink, useParams } from "react-router-dom";
 import { apiURL } from "../../../constants";
 import { selectSingleAlbum } from "../albumsSlice";
 import { fetchOneAlbum } from "../albumsThunks";
-import Tracks from "./Tracks";
+import Tracks from "../../tracks/Tracks";
 
 const OneAlbum = () => {
   const dispatch = useAppDispatch();
