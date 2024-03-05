@@ -8,6 +8,7 @@ import {
 import { fetchAlbums } from "./albumsThunks";
 import { Grid, Typography } from "@mui/material";
 import AlbumItem from "./components/AlbumItem";
+import { selectUser } from "../users/usersSlice";
 
 interface Props {
   artistId: string;
@@ -16,6 +17,7 @@ interface Props {
 const Albums: React.FC<Props> = ({ artistId }) => {
   const dispatch = useAppDispatch();
   const albums = useAppSelector(selectAlbums);
+  const user = useAppSelector(selectUser);
   const loading = useAppSelector(selectAlbumsLoading);
   const error = useAppSelector(selectAlbumsError);
 
@@ -31,7 +33,7 @@ const Albums: React.FC<Props> = ({ artistId }) => {
       <Grid item container spacing={2}>
         {albums.map(
           (album) =>
-            album.isPublished && (
+            (album.isPublished || (user && user.role === "admin")) && (
               <AlbumItem
                 key={album._id}
                 id={album._id}

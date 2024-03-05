@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { fetchTracks } from "./tracksThunk";
 import OneTrack from "./OneTrack";
 import { selectTracks } from "./tracksSlice";
+import { selectUser } from "../users/usersSlice";
 
 interface Props {
   albumId: string;
@@ -12,6 +13,7 @@ interface Props {
 const Tracks: React.FC<Props> = ({ albumId }) => {
   const dispatch = useAppDispatch();
   const tracks = useAppSelector(selectTracks);
+  const user = useAppSelector(selectUser);
 
   useEffect(() => {
     dispatch(fetchTracks(albumId));
@@ -22,7 +24,9 @@ const Tracks: React.FC<Props> = ({ albumId }) => {
       <Grid container direction="column">
         {tracks.map(
           (track) =>
-            track.isPublished && <OneTrack track={track} key={track.name} />
+            (track.isPublished || (user && user.role === "admin")) && (
+              <OneTrack track={track} key={track.name} />
+            )
         )}
       </Grid>
     </>

@@ -4,10 +4,12 @@ import { selectArtists } from "./artistsSlice";
 import { useEffect } from "react";
 import { fetchArtist } from "./artistsThunks";
 import ArtistItem from "./components/ArtistItem";
+import { selectUser } from "../users/usersSlice";
 
 const Artists = () => {
   const dispatch = useAppDispatch();
   const artists = useAppSelector(selectArtists);
+  const user = useAppSelector(selectUser);
 
   useEffect(() => {
     dispatch(fetchArtist());
@@ -21,7 +23,7 @@ const Artists = () => {
       <Grid item container spacing={2}>
         {artists.map(
           (artist) =>
-            artist.isPublished && (
+          (artist.isPublished || (user && user.role === "admin")) && (
               <ArtistItem
                 key={artist._id}
                 id={artist._id}
