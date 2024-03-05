@@ -5,6 +5,12 @@ export interface artist {
   photo: string;
 }
 
+export interface ArtistMutation {
+  name: string;
+  info: string;
+  photo: File | null;
+}
+
 export interface album {
   _id: string | null;
   name: string;
