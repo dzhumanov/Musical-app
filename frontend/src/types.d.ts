@@ -12,7 +12,7 @@ export interface ArtistMutation {
 }
 
 export interface album {
-  _id: string | null;
+  _id: string;
   name: string;
   image: string;
   date: number;
@@ -35,6 +35,15 @@ export interface track {
   duration: string;
   trackNumber: number;
   link: string;
+}
+
+export interface TrackMutation {
+  name: string;
+  duration: string;
+  trackNumber: number;
+  link: string;
+  artist: string;
+  album: string;
 }
 
 export interface RegisterMutation {
