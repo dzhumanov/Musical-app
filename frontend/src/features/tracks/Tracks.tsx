@@ -20,9 +20,10 @@ const Tracks: React.FC<Props> = ({ albumId }) => {
   return (
     <>
       <Grid container direction="column">
-        {tracks.map((track) => (
-          <OneTrack track={track} key={track.name} />
-        ))}
+        {tracks.map(
+          (track) =>
+            track.isPublished && <OneTrack track={track} key={track.name} />
+        )}
       </Grid>
     </>
   );

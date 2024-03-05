@@ -19,14 +19,17 @@ const Artists = () => {
         Artists
       </Typography>
       <Grid item container spacing={2}>
-        {artists.map((artist) => (
-          <ArtistItem
-            key={artist._id}
-            id={artist._id}
-            name={artist.name}
-            photo={artist.photo}
-          />
-        ))}
+        {artists.map(
+          (artist) =>
+            artist.isPublished && (
+              <ArtistItem
+                key={artist._id}
+                id={artist._id}
+                name={artist.name}
+                photo={artist.photo}
+              />
+            )
+        )}
       </Grid>
     </>
   );

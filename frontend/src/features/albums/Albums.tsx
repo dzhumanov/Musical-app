@@ -29,15 +29,18 @@ const Albums: React.FC<Props> = ({ artistId }) => {
         Albums
       </Typography>
       <Grid item container spacing={2}>
-        {albums.map((album) => (
-          <AlbumItem
-            key={album._id}
-            id={album._id}
-            name={album.name}
-            image={album.image}
-            date={album.date}
-          />
-        ))}
+        {albums.map(
+          (album) =>
+            album.isPublished && (
+              <AlbumItem
+                key={album._id}
+                id={album._id}
+                name={album.name}
+                image={album.image}
+                date={album.date}
+              />
+            )
+        )}
       </Grid>
     </>
   );
