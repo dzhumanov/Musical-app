@@ -45,3 +45,42 @@ export const createAlbum = createAsyncThunk<
     console.error(e);
   }
 });
+
+export const togglePublishedAlbum = createAsyncThunk<
+  void,
+  string,
+  { state: RootState }
+>("albums/toggle", async (albumId, thunkApi) => {
+  try {
+    const state = thunkApi.getState();
+    const token = state.users.user?.token;
+
+    if (token) {
+      await axiosApi.patch(`/albums/${albumId}/togglePublished`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+export const deleteAlbum = createAsyncThunk<void, string, { state: RootState }>(
+  "albums/delete",
+  async (albumId: string, thunkApi) => {
+    try {
+      const state = thunkApi.getState();
+      const token = state.users.user?.token;
+
+      if (token) {
+        await axiosApi.delete(`/albums/${albumId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+);

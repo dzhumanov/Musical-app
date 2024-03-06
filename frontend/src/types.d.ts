@@ -33,6 +33,10 @@ export interface AlbumMutation {
 
 export interface track {
   _id: string;
+  album: {
+    _id: string;
+    name: string;
+  };
   name: string;
   duration: string;
   trackNumber: number;

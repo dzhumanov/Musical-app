@@ -31,3 +31,42 @@ export const createTrack = createAsyncThunk<
     console.error(e);
   }
 });
+
+export const togglePublishedTrack = createAsyncThunk<
+  void,
+  string,
+  { state: RootState }
+>("tracks/toggle", async (trackId, thunkApi) => {
+  try {
+    const state = thunkApi.getState();
+    const token = state.users.user?.token;
+
+    if (token) {
+      await axiosApi.patch(`/tracks/${trackId}/togglePublished`, null, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    }
+  } catch (e) {
+    console.error(e);
+  }
+});
+
+export const deleteTrack = createAsyncThunk<void, string, { state: RootState }>(
+  "tracks/delete",
+  async (trackId: string, thunkApi) => {
+    try {
+      const state = thunkApi.getState();
+      const token = state.users.user?.token;
+
+      if (token) {
+        await axiosApi.delete(`/tracks/${trackId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+);
