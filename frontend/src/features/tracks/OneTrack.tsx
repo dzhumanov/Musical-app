@@ -64,7 +64,27 @@ const OneTrack: React.FC<Props> = ({ track }) => {
       <Grid item xs={6}>
         <Typography variant="h5">{track.name}</Typography>
       </Grid>
-
+      {user && user?._id === track?.user && (
+        <Grid
+          item
+          container
+          xs={4}
+          alignItems="center"
+          justifyContent="flex-end"
+        >
+          <Typography
+            variant="h5"
+            display="block"
+            sx={{
+              color: track.isPublished ? "green" : "red",
+              fontSize: "16px",
+              mr: 1,
+            }}
+          >
+            {track.isPublished ? "Published" : "Not published"}
+          </Typography>
+        </Grid>
+      )}
       {user && user.role === "admin" && (
         <Grid
           item

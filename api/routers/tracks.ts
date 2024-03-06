@@ -44,6 +44,7 @@ tracksRouter.post(
         album: req.body.album,
         duration: req.body.duration,
         trackNumber: req.body.trackNumber,
+        user: req.user?._id,
       };
 
       const track = new Track(trackData);

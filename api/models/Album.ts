@@ -1,4 +1,4 @@
-import { Schema, model, Types } from "mongoose";
+import mongoose, { Schema, model, Types } from "mongoose";
 import Artist from "./Artist";
 
 const AlbumSchema = new Schema(
@@ -25,6 +25,11 @@ const AlbumSchema = new Schema(
     },
     image: {
       type: String,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     isPublished: {
       type: Boolean,

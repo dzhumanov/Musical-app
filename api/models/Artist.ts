@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 const ArtistSchema = new Schema(
   {
@@ -11,6 +11,11 @@ const ArtistSchema = new Schema(
     },
     photo: {
       type: String,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     isPublished: {
       type: Boolean,

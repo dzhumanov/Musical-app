@@ -23,7 +23,7 @@ const Artists = () => {
       <Grid item container spacing={2}>
         {artists.map(
           (artist) =>
-          (artist.isPublished || (user && user.role === "admin")) && (
+          ((artist.isPublished || (user && user.role === "admin")) || (artist.user === user?._id)) && (
               <ArtistItem
                 key={artist._id}
                 id={artist._id}

@@ -3,6 +3,7 @@ export interface artist {
   name: string;
   info: string;
   photo: string;
+  user: string;
   isPublished: boolean;
 }
 
@@ -21,6 +22,7 @@ export interface album {
     name: string;
     _id: string;
   };
+  user: string;
   isPublished: boolean;
 }
 
@@ -41,6 +43,7 @@ export interface track {
   duration: string;
   trackNumber: number;
   link: string;
+  user: string;
   isPublished: boolean;
 }
 

@@ -57,6 +57,7 @@ albumsRouter.post(
         artist: req.body.artist,
         date: req.body.date,
         image: req.file ? req.file.filename : null,
+        user: req.user?._id,
       };
 
       const album = new Album(albumData);

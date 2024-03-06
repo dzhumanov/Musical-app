@@ -33,7 +33,9 @@ const Albums: React.FC<Props> = ({ artistId }) => {
       <Grid item container spacing={2}>
         {albums.map(
           (album) =>
-            (album.isPublished || (user && user.role === "admin")) && (
+            (album.isPublished ||
+              (user && user.role === "admin") ||
+              album.user === user?._id) && (
               <AlbumItem
                 key={album._id}
                 id={album._id}

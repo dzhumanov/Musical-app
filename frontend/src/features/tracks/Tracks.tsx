@@ -24,7 +24,9 @@ const Tracks: React.FC<Props> = ({ albumId }) => {
       <Grid container direction="column">
         {tracks.map(
           (track) =>
-            (track.isPublished || (user && user.role === "admin")) && (
+            (track.isPublished ||
+              (user && user.role === "admin") ||
+              track.user === user?._id) && (
               <OneTrack track={track} key={track.name} />
             )
         )}

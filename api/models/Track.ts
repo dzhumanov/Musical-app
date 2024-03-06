@@ -1,4 +1,4 @@
-import { Schema, model, Types } from "mongoose";
+import mongoose, { Schema, model, Types } from "mongoose";
 import Album from "./Album";
 
 const TrackSchema = new Schema(
@@ -29,6 +29,11 @@ const TrackSchema = new Schema(
     },
     link: {
       type: String,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     isPublished: {
       type: Boolean,

@@ -73,6 +73,20 @@ const OneArtist = () => {
           <Grid item>
             <Typography variant="h4">{artist?.info}</Typography>
           </Grid>
+          {user && user?._id === artist?.user && (
+            <Typography variant="h4" display="block">
+              Status:{" "}
+              {artist?.isPublished ? (
+                <span style={{ display: "inline-block", color: "green" }}>
+                  Published
+                </span>
+              ) : (
+                <span style={{ display: "inline-block", color: "red" }}>
+                  Not published
+                </span>
+              )}
+            </Typography>
+          )}
           {user && user.role === "admin" && (
             <Grid item sx={{ mt: "20px" }}>
               <Typography variant="h4" display="block">

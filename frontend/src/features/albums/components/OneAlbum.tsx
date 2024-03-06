@@ -1,8 +1,7 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { apiURL } from "../../../constants";
 import { selectSingleAlbum } from "../albumsSlice";
 import {
   deleteAlbum,
@@ -55,6 +54,20 @@ const OneAlbum = () => {
           <Typography variant="h4" sx={{ fontWeight: "bold" }}>
             {album?.date}
           </Typography>
+          {user && user?._id === album?.user && (
+            <Typography variant="h4" display="block">
+              Status:{" "}
+              {album?.isPublished ? (
+                <span style={{ display: "inline-block", color: "green" }}>
+                  Published
+                </span>
+              ) : (
+                <span style={{ display: "inline-block", color: "red" }}>
+                  Not published
+                </span>
+              )}
+            </Typography>
+          )}
           {user && user.role === "admin" && (
             <Grid item sx={{ mt: "20px" }}>
               <Typography variant="h4" display="block">

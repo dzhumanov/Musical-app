@@ -46,6 +46,7 @@ artistsRouter.post(
       const artistData = {
         name: req.body.name,
         info: req.body.info,
+        user: req.user?._id,
         photo: req.file ? req.file.filename : null,
       };
 
