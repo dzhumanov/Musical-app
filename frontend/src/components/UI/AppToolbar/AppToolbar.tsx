@@ -1,11 +1,5 @@
 import { NavLink } from "react-router-dom";
-import {
-  AppBar,
-  Grid,
-  styled,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Grid, styled, Toolbar, Typography } from "@mui/material";
 import { useAppSelector } from "../../../app/hooks";
 import { selectUser } from "../../../features/users/usersSlice";
 import UserMenu from "./UserMenu";

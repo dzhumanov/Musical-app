@@ -10,7 +10,8 @@ const trackHistoryRouter = express.Router();
 trackHistoryRouter.get("/", auth, async (req: RequestWithUser, res, next) => {
   try {
     const results = await TrackHistory.find({ user: req.user?._id })
-      .populate("track").populate("artist", "name")
+      .populate("track")
+      .populate("artist", "name")
       .sort({ datetime: -1 });
     return res.send(results);
   } catch (error) {
@@ -20,11 +21,7 @@ trackHistoryRouter.get("/", auth, async (req: RequestWithUser, res, next) => {
 
 trackHistoryRouter.post("/", auth, async (req: RequestWithUser, res, next) => {
   try {
-    if (!req.user) {
-      return res.status(401).send({ error: "Unauthorized" });
-    }
-
-    const userId = req.user._id;
+    const userId = req.user?._id;
 
     const trackId = req.body.track;
     if (!trackId) {

@@ -21,7 +21,6 @@ const TrackHistory = () => {
     console.log(history);
   }, [dispatch]);
 
-  
   return (
     <Grid container justifyContent="center">
       {history && history.length > 0 ? (
