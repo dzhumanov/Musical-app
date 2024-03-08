@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import {
   selectAlbums,
-  selectAlbumsError,
   selectAlbumsLoading,
 } from "./albumsSlice";
 import { fetchAlbums } from "./albumsThunks";
@@ -19,7 +18,6 @@ const Albums: React.FC<Props> = ({ artistId }) => {
   const albums = useAppSelector(selectAlbums);
   const user = useAppSelector(selectUser);
   const loading = useAppSelector(selectAlbumsLoading);
-  const error = useAppSelector(selectAlbumsError);
 
   useEffect(() => {
     dispatch(fetchAlbums(artistId));

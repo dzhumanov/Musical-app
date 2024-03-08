@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from "@mui/material";
+import { Box,  Grid, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
@@ -11,6 +11,8 @@ import { selectSingleArtist } from "../artistsSlice";
 import { apiURL } from "../../../constants";
 import Albums from "../../albums/Albums";
 import { selectUser } from "../../users/usersSlice";
+import InterfaceInfoAdmin from "../../../components/UI/InterfaceInfo/InterfaceInfoAdmin";
+import InterfaceInfoUser from "../../../components/UI/InterfaceInfo/InterfaceInfoUser";
 
 const OneArtist = () => {
   const dispatch = useAppDispatch();
@@ -48,6 +50,25 @@ const OneArtist = () => {
     navigate("/");
   };
 
+  let interfaceInfo;
+
+  if (user && user.role === "admin") {
+    interfaceInfo = (
+      <InterfaceInfoAdmin
+        isPublished={artist?.isPublished}
+        onDelete={handleDelete}
+        onToggle={handleToggle}
+      />
+    );
+  } else if (user && user._id === artist?.user && !artist?.isPublished) {
+    interfaceInfo = (
+      <InterfaceInfoUser
+        isPublished={artist.isPublished}
+        onDelete={handleDelete}
+      />
+    );
+  }
+
   return (
     <>
       <Grid container>
@@ -73,101 +94,7 @@ const OneArtist = () => {
           <Grid item>
             <Typography variant="h4">{artist?.info}</Typography>
           </Grid>
-          {user && user?._id === artist?.user && (
-            <>
-              <Typography variant="h4" display="block">
-                Status:{" "}
-                {artist?.isPublished ? (
-                  <span style={{ display: "inline-block", color: "green" }}>
-                    Published
-                  </span>
-                ) : (
-                  <span style={{ display: "inline-block", color: "red" }}>
-                    Not published
-                  </span>
-                )}
-              </Typography>
-              <Button
-                onClick={handleDelete}
-                color="primary"
-                variant="contained"
-                sx={{
-                  mr: "20px",
-                  fontSize: "32px",
-                  bgcolor: "red",
-                  color: "#fff",
-                  "&:hover": {
-                    bgcolor: "#fff",
-                    color: "#000",
-                  },
-                  "&:active": {
-                    bgcolor: "#000",
-                    color: "#fff",
-                  },
-                }}
-              >
-                Delete
-              </Button>
-            </>
-          )}
-          {user && user.role === "admin" && (
-            <Grid item sx={{ mt: "20px" }}>
-              <Typography variant="h4" display="block">
-                Status:{" "}
-                {artist?.isPublished ? (
-                  <span style={{ display: "inline-block", color: "green" }}>
-                    Published
-                  </span>
-                ) : (
-                  <span style={{ display: "inline-block", color: "red" }}>
-                    Not published
-                  </span>
-                )}
-              </Typography>
-              <Button
-                onClick={handleToggle}
-                color="primary"
-                variant="contained"
-                sx={{
-                  mr: "20px",
-                  fontSize: "32px",
-                  bgcolor: "#1976D2",
-                  color: "#fff",
-                  "&:hover": {
-                    bgcolor: "#fff",
-                    color: "#000",
-                  },
-                  "&:active": {
-                    bgcolor: "#000",
-                    color: "#fff",
-                  },
-                }}
-              >
-                {artist?.isPublished ? "Unpublish" : "Publish"}
-              </Button>
-              <Button
-                onClick={handleDelete}
-                color="primary"
-                variant="contained"
-                sx={{
-                  mr: "20px",
-                  fontSize: "32px",
-                  bgcolor: "red",
-                  color: "#fff",
-                  "&:hover": {
-                    bgcolor: "#fff",
-                    color: "#000",
-                  },
-                  "&:active": {
-                    bgcolor: "#000",
-                    color: "#fff",
-                  },
-                }}
-              >
-                Delete
-              </Button>
-            </Grid>
-          )}
+          {interfaceInfo}
         </Grid>
       </Grid>
       <Albums artistId={artistId} />

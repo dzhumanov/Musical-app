@@ -7,14 +7,12 @@ interface AlbumsState {
   albums: album[];
   singleAlbum: album | null;
   fetchLoading: boolean;
-  fetchError: boolean;
 }
 
 const initialState: AlbumsState = {
   albums: [],
   singleAlbum: null,
   fetchLoading: false,
-  fetchError: false,
 };
 
 export const albumsSlice = createSlice({
@@ -24,7 +22,6 @@ export const albumsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchAlbums.pending, (state) => {
       state.fetchLoading = true;
-      state.fetchError = false;
     });
     builder.addCase(fetchAlbums.fulfilled, (state, { payload: albums }) => {
       state.fetchLoading = false;
@@ -32,11 +29,9 @@ export const albumsSlice = createSlice({
     });
     builder.addCase(fetchAlbums.rejected, (state) => {
       state.fetchLoading = false;
-      state.fetchError = true;
     });
     builder.addCase(fetchOneAlbum.pending, (state) => {
       state.fetchLoading = true;
-      state.fetchError = false;
     });
     builder.addCase(fetchOneAlbum.fulfilled, (state, { payload: album }) => {
       state.fetchLoading = false;
@@ -44,7 +39,6 @@ export const albumsSlice = createSlice({
     });
     builder.addCase(fetchOneAlbum.rejected, (state) => {
       state.fetchLoading = false;
-      state.fetchError = true;
     });
   },
 });
@@ -54,4 +48,3 @@ export const selectAlbums = (state: RootState) => state.albums.albums;
 export const selectSingleAlbum = (state: RootState) => state.albums.singleAlbum;
 export const selectAlbumsLoading = (state: RootState) =>
   state.albums.fetchLoading;
-export const selectAlbumsError = (state: RootState) => state.albums.fetchError;

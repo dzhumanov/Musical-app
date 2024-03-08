@@ -5,6 +5,8 @@ import { selectUser } from "../users/usersSlice";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { sendTrackHistory } from "../trackHistory/trackHistoryThunk";
 import { deleteTrack, fetchTracks, togglePublishedTrack } from "./tracksThunk";
+import InterfaceTrackAdmin from "../../components/UI/InterfaceInfo/InterfaceTrackAdmin";
+import InterfaceTrackUser from "../../components/UI/InterfaceInfo/InterfaceTrackUser";
 
 interface Props {
   track: track;
@@ -46,6 +48,25 @@ const OneTrack: React.FC<Props> = ({ track }) => {
     }
   };
 
+  let interfaceInfo;
+
+  if (user && user.role === "admin") {
+    interfaceInfo = (
+      <InterfaceTrackAdmin
+        isPublished={track?.isPublished}
+        onDelete={handleDelete}
+        onToggle={handleToggle}
+      />
+    );
+  } else if (user && user._id === track?.user && !track?.isPublished) {
+    interfaceInfo = (
+      <InterfaceTrackUser
+        isPublished={track.isPublished}
+        onDelete={handleDelete}
+      />
+    );
+  }
+
   const playYouTubeTrack = (youtubeLink: string) => {
     window.open(youtubeLink, "YouTube Player", "width=1000,height=1000");
   };
@@ -64,72 +85,7 @@ const OneTrack: React.FC<Props> = ({ track }) => {
       <Grid item xs={6}>
         <Typography variant="h5">{track.name}</Typography>
       </Grid>
-      {user && user?._id === track?.user && (
-        <Grid
-          item
-          container
-          xs={4}
-          alignItems="center"
-          justifyContent="flex-end"
-        >
-          <Typography
-            variant="h5"
-            display="block"
-            sx={{
-              color: track.isPublished ? "green" : "red",
-              fontSize: "16px",
-              mr: 1,
-            }}
-          >
-            {track.isPublished ? "Published" : "Not published"}
-          </Typography>
-          <Button
-            onClick={handleDelete}
-            color="primary"
-            variant="contained"
-            sx={{ bgcolor: "red", mr: 1 }}
-          >
-            Delete
-          </Button>
-        </Grid>
-      )}
-      {user && user.role === "admin" && (
-        <Grid
-          item
-          container
-          xs={4}
-          alignItems="center"
-          justifyContent="flex-end"
-        >
-          <Typography
-            variant="h5"
-            display="block"
-            sx={{
-              color: track.isPublished ? "green" : "red",
-              fontSize: "16px",
-              mr: 1,
-            }}
-          >
-            {track.isPublished ? "Published" : "Not published"}
-          </Typography>
-          <Button
-            color="primary"
-            onClick={handleToggle}
-            variant="contained"
-            sx={{ mr: 1 }}
-          >
-            {track.isPublished ? "Unpublish" : "Publish"}
-          </Button>
-          <Button
-            onClick={handleDelete}
-            color="primary"
-            variant="contained"
-            sx={{ bgcolor: "red", mr: 1 }}
-          >
-            Delete
-          </Button>
-        </Grid>
-      )}
+      {interfaceInfo}
       <Grid item xs={1} sx={{ ml: "auto", textAlign: "right" }}>
         <Typography variant="h5">{track.duration}</Typography>
       </Grid>

@@ -10,6 +10,8 @@ import {
 } from "../albumsThunks";
 import Tracks from "../../tracks/Tracks";
 import { selectUser } from "../../users/usersSlice";
+import InterfaceInfoAdmin from "../../../components/UI/InterfaceInfo/InterfaceInfoAdmin";
+import InterfaceInfoUser from "../../../components/UI/InterfaceInfo/InterfaceInfoUser";
 
 const OneAlbum = () => {
   const dispatch = useAppDispatch();
@@ -41,6 +43,25 @@ const OneAlbum = () => {
     navigate("/");
   };
 
+  let interfaceInfo;
+
+  if (user && user.role === "admin") {
+    interfaceInfo = (
+      <InterfaceInfoAdmin
+        isPublished={album?.isPublished}
+        onDelete={handleDelete}
+        onToggle={handleToggle}
+      />
+    );
+  } else if (user && user._id === album?.user && !album?.isPublished) {
+    interfaceInfo = (
+      <InterfaceInfoUser
+        isPublished={album.isPublished}
+        onDelete={handleDelete}
+      />
+    );
+  }
+
   return (
     <>
       <Grid container direction="column">
@@ -54,102 +75,7 @@ const OneAlbum = () => {
           <Typography variant="h4" sx={{ fontWeight: "bold" }}>
             {album?.date}
           </Typography>
-          {user && user?._id === album?.user && (
-            <>
-              <Typography variant="h4" display="block">
-                Status:{" "}
-                {album?.isPublished ? (
-                  <span style={{ display: "inline-block", color: "green" }}>
-                    Published
-                  </span>
-                ) : (
-                  <span style={{ display: "inline-block", color: "red" }}>
-                    Not published
-                  </span>
-                )}
-              </Typography>
-              <Button
-                onClick={handleDelete}
-                color="primary"
-                variant="contained"
-                sx={{
-                  mr: "20px",
-                  fontSize: "32px",
-                  bgcolor: "red",
-                  color: "#fff",
-                  width: "200px",
-                  "&:hover": {
-                    bgcolor: "#fff",
-                    color: "#000",
-                  },
-                  "&:active": {
-                    bgcolor: "#000",
-                    color: "#fff",
-                  },
-                }}
-              >
-                Delete
-              </Button>
-            </>
-          )}
-          {user && user.role === "admin" && (
-            <Grid item sx={{ mt: "20px" }}>
-              <Typography variant="h4" display="block">
-                Status:{" "}
-                {album?.isPublished ? (
-                  <span style={{ display: "inline-block", color: "green" }}>
-                    Published
-                  </span>
-                ) : (
-                  <span style={{ display: "inline-block", color: "red" }}>
-                    Not published
-                  </span>
-                )}
-              </Typography>
-              <Button
-                onClick={handleToggle}
-                color="primary"
-                variant="contained"
-                sx={{
-                  mr: "20px",
-                  fontSize: "32px",
-                  bgcolor: "#1976D2",
-                  color: "#fff",
-                  "&:hover": {
-                    bgcolor: "#fff",
-                    color: "#000",
-                  },
-                  "&:active": {
-                    bgcolor: "#000",
-                    color: "#fff",
-                  },
-                }}
-              >
-                {album?.isPublished ? "Unpublish" : "Publish"}
-              </Button>
-              <Button
-                onClick={handleDelete}
-                color="primary"
-                variant="contained"
-                sx={{
-                  mr: "20px",
-                  fontSize: "32px",
-                  bgcolor: "red",
-                  color: "#fff",
-                  "&:hover": {
-                    bgcolor: "#fff",
-                    color: "#000",
-                  },
-                  "&:active": {
-                    bgcolor: "#000",
-                    color: "#fff",
-                  },
-                }}
-              >
-                Delete
-              </Button>
-            </Grid>
-          )}
+          {interfaceInfo}
         </Grid>
       </Grid>
       <Grid container direction="column">
