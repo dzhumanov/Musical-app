@@ -40,7 +40,7 @@ const run = async () => {
     }
   );
 
-  const [LilPeep, Joji, Kino] = await Artist.create(
+  const [LilPeep, Joji, Kino, KanyeWest] = await Artist.create(
     {
       name: "Lil Peep",
       info: "Depressed Emo Rap",
@@ -58,54 +58,74 @@ const run = async () => {
       info: "Rock",
       photo: "fixtures/kino.jpg",
       isPublished: true,
+    },
+    {
+      name: "Kanye West",
+      info: "Rap",
+      photo: "fixtures/west.webp",
+      isPublished: false,
     }
   );
 
-  const [crybaby, HELLBOY, Ballads, SMITHEREENS, Legend, StarNamedSun] =
-    await Album.create(
-      {
-        name: "crybaby",
-        artist: LilPeep,
-        date: 2016,
-        image: "fixtures/crybaby.jpg",
-        isPublished: true,
-      },
-      {
-        name: "HELLBOY",
-        artist: LilPeep,
-        date: 2018,
-        image: "fixtures/hellboy.jpg",
-        isPublished: true,
-      },
-      {
-        name: "Ballads 1",
-        artist: Joji,
-        date: 2018,
-        image: "fixtures/Ballads.png",
-        isPublished: true,
-      },
-      {
-        name: "SMITHEREENS",
-        artist: Joji,
-        date: 2022,
-        image: "fixtures/Smithereens.png",
-        isPublished: true,
-      },
-      {
-        name: "Легенда",
-        artist: Kino,
-        date: 2018,
-        image: "fixtures/legend.jpg",
-        isPublished: true,
-      },
-      {
-        name: "Звезда по имени Солнце",
-        artist: Kino,
-        date: 1986,
-        image: "fixtures/starnamedSun.jpg",
-        isPublished: true,
-      }
-    );
+  const [
+    crybaby,
+    HELLBOY,
+    Ballads,
+    SMITHEREENS,
+    Legend,
+    StarNamedSun,
+    WestAlbum,
+  ] = await Album.create(
+    {
+      name: "crybaby",
+      artist: LilPeep,
+      date: 2016,
+      image: "fixtures/crybaby.jpg",
+      isPublished: true,
+    },
+    {
+      name: "HELLBOY",
+      artist: LilPeep,
+      date: 2018,
+      image: "fixtures/hellboy.jpg",
+      isPublished: true,
+    },
+    {
+      name: "Ballads 1",
+      artist: Joji,
+      date: 2018,
+      image: "fixtures/Ballads.png",
+      isPublished: true,
+    },
+    {
+      name: "SMITHEREENS",
+      artist: Joji,
+      date: 2022,
+      image: "fixtures/Smithereens.png",
+      isPublished: true,
+    },
+    {
+      name: "Легенда",
+      artist: Kino,
+      date: 2018,
+      image: "fixtures/legend.jpg",
+      isPublished: true,
+    },
+    {
+      name: "Звезда по имени Солнце",
+      artist: Kino,
+      date: 1986,
+      image: "fixtures/starnamedSun.jpg",
+      isPublished: true,
+    },
+    {
+      name: "My beautiful Dark Twisted Fantasy",
+      artist: KanyeWest,
+      date: 2010,
+      image: "fixtures/dark.jpg",
+      isPublished: false,
+    }
+  );
 
   await Track.create(
     {
@@ -348,6 +368,30 @@ const run = async () => {
       trackNumber: 5,
       link: "https://www.youtube.com/watch?v=UKQW3SSqAxw",
       isPublished: true,
+    },
+    {
+      name: "Runaway",
+      album: WestAlbum,
+      duration: "1:53",
+      trackNumber: 1,
+      link: "https://www.youtube.com/watch?v=zhlP4lgDGGA&list=PLklvWcXoAxKiJGaLhcHFZ1OPC5eKKpYB_&index=9",
+      isPublished: false,
+    },
+    {
+      name: "Power",
+      album: WestAlbum,
+      duration: "1:53",
+      trackNumber: 2,
+      link: "https://www.youtube.com/watch?v=MHhTgNgEzKQ&list=PLklvWcXoAxKiJGaLhcHFZ1OPC5eKKpYB_&index=3",
+      isPublished: false,
+    },
+    {
+      name: "Hell of a life",
+      album: WestAlbum,
+      duration: "1:53",
+      trackNumber: 3,
+      link: "https://www.youtube.com/watch?v=QvImAiU04Ag&list=PLklvWcXoAxKiJGaLhcHFZ1OPC5eKKpYB_&index=10",
+      isPublished: false,
     }
   );
 
