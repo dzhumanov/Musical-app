@@ -85,7 +85,7 @@ artistsRouter.patch(
 artistsRouter.delete(
   "/:id",
   auth,
-  permit("admin"),
+  permit("admin", "user"),
   async (req: RequestWithUser, res, next) => {
     try {
       const artistId = req.params.id;

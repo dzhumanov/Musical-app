@@ -82,7 +82,7 @@ tracksRouter.patch(
 tracksRouter.delete(
   "/:id",
   auth,
-  permit("admin"),
+  permit("admin", "user"),
   async (req: RequestWithUser, res, next) => {
     try {
       const trackId = req.params.id;

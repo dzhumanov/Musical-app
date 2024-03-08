@@ -95,7 +95,7 @@ albumsRouter.patch(
 albumsRouter.delete(
   "/:id",
   auth,
-  permit("admin"),
+  permit("admin", "user"),
   async (req: RequestWithUser, res, next) => {
     try {
       const albumId = req.params.id;

@@ -74,18 +74,41 @@ const OneArtist = () => {
             <Typography variant="h4">{artist?.info}</Typography>
           </Grid>
           {user && user?._id === artist?.user && (
-            <Typography variant="h4" display="block">
-              Status:{" "}
-              {artist?.isPublished ? (
-                <span style={{ display: "inline-block", color: "green" }}>
-                  Published
-                </span>
-              ) : (
-                <span style={{ display: "inline-block", color: "red" }}>
-                  Not published
-                </span>
-              )}
-            </Typography>
+            <>
+              <Typography variant="h4" display="block">
+                Status:{" "}
+                {artist?.isPublished ? (
+                  <span style={{ display: "inline-block", color: "green" }}>
+                    Published
+                  </span>
+                ) : (
+                  <span style={{ display: "inline-block", color: "red" }}>
+                    Not published
+                  </span>
+                )}
+              </Typography>
+              <Button
+                onClick={handleDelete}
+                color="primary"
+                variant="contained"
+                sx={{
+                  mr: "20px",
+                  fontSize: "32px",
+                  bgcolor: "red",
+                  color: "#fff",
+                  "&:hover": {
+                    bgcolor: "#fff",
+                    color: "#000",
+                  },
+                  "&:active": {
+                    bgcolor: "#000",
+                    color: "#fff",
+                  },
+                }}
+              >
+                Delete
+              </Button>
+            </>
           )}
           {user && user.role === "admin" && (
             <Grid item sx={{ mt: "20px" }}>

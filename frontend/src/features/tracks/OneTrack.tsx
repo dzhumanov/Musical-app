@@ -83,6 +83,14 @@ const OneTrack: React.FC<Props> = ({ track }) => {
           >
             {track.isPublished ? "Published" : "Not published"}
           </Typography>
+          <Button
+            onClick={handleDelete}
+            color="primary"
+            variant="contained"
+            sx={{ bgcolor: "red", mr: 1 }}
+          >
+            Delete
+          </Button>
         </Grid>
       )}
       {user && user.role === "admin" && (
