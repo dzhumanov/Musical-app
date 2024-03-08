@@ -10,8 +10,13 @@ import TrackHistory from "./features/trackHistory/TrackHistory";
 import CreateArtist from "./features/artists/CreateArtist";
 import CreateAlbum from "./features/albums/CreateAlbum";
 import CreateTrack from "./features/tracks/CreateTrack";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import { useAppSelector } from "./app/hooks";
+import { selectUser } from "./features/users/usersSlice";
 
 function App() {
+  const user = useAppSelector(selectUser);
+
   return (
     <>
       <CssBaseline />
@@ -29,9 +34,43 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
 
-            <Route path="/artists/create" element={<CreateArtist/>} />
-            <Route path="/albums/create" element={<CreateAlbum/>} />
-            <Route path="/tracks/create" element={<CreateTrack/>} />
+            <Route
+              path="/artists/create"
+              element={
+                <ProtectedRoute
+                  isAllowed={
+                    (user && user.role === "admin") || user?.role === "user"
+                  }
+                >
+                  <CreateArtist />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/albums/create"
+              element={
+                <ProtectedRoute
+                  isAllowed={
+                    (user && user.role === "admin") || user?.role === "user"
+                  }
+                >
+                  <CreateAlbum />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tracks/create"
+              element={
+                <ProtectedRoute
+                  isAllowed={
+                    (user && user.role === "admin") || user?.role === "user"
+                  }
+                >
+                  <CreateTrack />
+                </ProtectedRoute>
+              }
+            />
 
             <Route path="*" element={<h1>Not found</h1>} />
           </Routes>
