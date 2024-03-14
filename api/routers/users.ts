@@ -1,13 +1,16 @@
 import express from "express";
 import User from "../models/User";
 import mongoose from "mongoose";
+import config from "../config";
+import { OAuth2Client } from "google-auth-library";
 
 const userRouter = express.Router();
+const client = new OAuth2Client(config.google.clientId);
 
 userRouter.post("/", async (req, res, next) => {
   try {
     const user = new User({
-      username: req.body.username,
+      email: req.body.email,
       password: req.body.password,
     });
     user.generateToken();
@@ -23,20 +26,20 @@ userRouter.post("/", async (req, res, next) => {
 
 userRouter.post("/sessions", async (req, res, next) => {
   try {
-    const user = await User.findOne({ username: req.body.username });
+    const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      return res.status(422).send({ error: "Username or password is wrong!!" });
+      return res.status(422).send({ error: "Email or password is wrong!!" });
     }
 
     const isMatch = await user.checkPassword(req.body.password);
 
     if (!isMatch) {
-      return res.status(422).send({ error: "Username or password is wrong!!" });
+      return res.status(422).send({ error: "Email or password is wrong!!" });
     }
     user.generateToken();
     await user.save();
 
-    return res.send({ message: "Username and password are correct!", user });
+    return res.send({ message: "Email and password are correct!", user });
   } catch (e) {
     next(e);
   }
@@ -67,6 +70,51 @@ userRouter.delete("/sessions", async (req, res, next) => {
     await user.save();
 
     return res.send({ ...successMessage, stage: "Success" });
+  } catch (e) {
+    return next(e);
+  }
+});
+
+userRouter.post("/google", async (req, res, next) => {
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: req.body.credential,
+      audience: config.google.clientId,
+    });
+
+    const payload = ticket.getPayload();
+
+    if (!payload) {
+      return res.status(400).send("Google login error");
+    }
+
+    const email = payload["email"];
+    const id = payload["sub"];
+    const displayName = payload["name"];
+
+    if (!email) {
+      return res.status(400).send({ error: "Email is not present!" });
+    }
+
+    let user = await User.findOne({ googledID: id });
+
+    if (!user) {
+      user = new User({
+        email,
+        password: crypto.randomUUID(),
+        googleID: id,
+        displayName,
+      });
+    }
+
+    user.generateToken();
+
+    await user.save();
+
+    return res.send({
+      message: "Login with google successful!",
+      user,
+    });
   } catch (e) {
     return next(e);
   }

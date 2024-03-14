@@ -15,7 +15,8 @@ import {
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectLoginError } from "./usersSlice";
-import { login } from "./usersThunk";
+import { googleLogin, login } from "./usersThunk";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +24,7 @@ const Login = () => {
   const error = useAppSelector(selectLoginError);
 
   const [state, setState] = useState<LoginMutation>({
-    username: "",
+    email: "",
     password: "",
   });
 
@@ -35,6 +36,11 @@ const Login = () => {
   const submitFormHandler = async (event: React.FormEvent) => {
     event.preventDefault();
     await dispatch(login(state)).unwrap();
+    navigate("/");
+  };
+
+  const googleLoginHandler = async (credential: string) => {
+    await dispatch(googleLogin(credential)).unwrap();
     navigate("/");
   };
 
@@ -66,10 +72,10 @@ const Login = () => {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                label="Username"
-                name="username"
-                autoComplete="current-username"
-                value={state.username}
+                label="Email"
+                name="email"
+                autoComplete="current-email"
+                value={state.email}
                 onChange={inputChangeHandler}
               />
             </Grid>
@@ -94,6 +100,18 @@ const Login = () => {
           >
             Sign In
           </Button>
+          <Box sx={{ pt: 2 }}>
+            <GoogleLogin
+              onSuccess={(credentialResponse) => {
+                if (credentialResponse.credential) {
+                  void googleLoginHandler(credentialResponse.credential);
+                }
+              }}
+              onError={() => {
+                console.log("Login Failed");
+              }}
+            />
+          </Box>
 
           <Grid container justifyContent="flex-end">
             <Grid item>

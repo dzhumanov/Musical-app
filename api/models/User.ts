@@ -7,17 +7,17 @@ const SALT_WORK_FACTOR = 10;
 
 const UserSchema = new Schema(
   {
-    username: {
+    email: {
       type: String,
       required: true,
       unique: true,
       validate: {
         validator: async function (
           this: HydratedDocument<UserFields>,
-          username: string
+          email: string
         ) {
-          if (!this.isModified("username")) return true;
-          const user = await User.findOne({ username: username });
+          if (!this.isModified("email")) return true;
+          const user = await User.findOne({ email: email });
           if (user) return false;
           return true;
         },
@@ -37,6 +37,8 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    displayName: String,
+    googleID: String,
   },
   {
     versionKey: false,

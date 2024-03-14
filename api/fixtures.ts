@@ -28,13 +28,13 @@ const run = async () => {
 
   await User.create(
     {
-      username: "admin",
+      email: "admin@spotify.local",
       password: "123321",
       role: "admin",
       token: crypto.randomUUID(),
     },
     {
-      username: "defaultUser",
+      email: "defaultUser@spotify.local",
       password: "123321",
       token: crypto.randomUUID(),
     }
